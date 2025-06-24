@@ -1,14 +1,18 @@
 import React from "react";
+import { useUser } from "../UserContext";
 
-const HomePage: React.FC = () => (
-    <div>
-        {/* Header */}
-        <header style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "1.5rem 3rem 1.5rem 2rem",
-            borderBottom: "1px solid #f0f0f0",
+const HomePage: React.FC = () => {
+    const { user } = useUser();
+
+    return (
+        <div>
+            {/* Header */}
+            <header style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                padding: "1.5rem 3rem 1.5rem 2rem",
+                borderBottom: "1px solid #f0f0f0",
             background: "#fff"
         }}>
             <div style={{ fontWeight: 600, fontSize: "1.3rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
@@ -21,6 +25,11 @@ const HomePage: React.FC = () => (
                     marginRight: 6
                 }}/>
                 The Burger Station
+                {user && (
+                    <span style={{ marginLeft: "1rem", fontSize: "0.9rem", color: "#666" }}>
+                        Welcome, {user.fullName}!
+                    </span>
+                )}
             </div>
             <nav style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
                 <a href="/menu" style={{ color: "#222", textDecoration: "none", fontWeight: 500 }}>Menu</a>
@@ -83,6 +92,7 @@ const HomePage: React.FC = () => (
             </div>
         </main>
     </div>
-);
+    );
+};
 
 export default HomePage;
