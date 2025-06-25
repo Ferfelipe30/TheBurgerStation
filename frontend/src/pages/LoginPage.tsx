@@ -26,16 +26,21 @@ const LoginPage: React.FC = () => {
             if (!res.ok) throw new Error(data.message || 'Login failed');
             alert('¡Login Exitoso!');
             // Guardar el usuario en el contexto global
-            setUser({
-                id: data.user.id,
-                email: data.user.email,
-                fullName: data.user.user_metadata?.full_name || "",
-            });
-            navigate('/');
-        } catch (err: any) {
-            setError(err.message);
+            if (res.ok) {
+                setUser({
+                    id: data.user.id,
+                    email: data.user.email,
+                    fullName: data.user.fullName
+                });
+                navigate('/menu');
+            } else {
+                setError(data.message || 'Login failed');
+            }
+        } catch (err) {
+            setError('Login failed');
+        } finally {
+            setLoading(false);
         }
-        setLoading(false);
     };
 
     return (

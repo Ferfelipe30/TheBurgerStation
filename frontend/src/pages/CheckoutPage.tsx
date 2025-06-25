@@ -1,17 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart } from "../CartContext";
 import { useNavigate } from 'react-router-dom';
+import { useUser } from '../UserContext';
 
 const TAX_RATE = 0.07;
 const DELIVERY_FEE = 3.0;
 
 const CheckoutPage: React.FC = () => {
     const { items, clear } = useCart();
+    const { user } = useUser();
     const navigate = useNavigate();
 
     const subtotal = items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
     const tax = subtotal * TAX_RATE;
     const total = subtotal + tax + DELIVERY_FEE;
+
+    const handleConfirmOrder = async () => {
+        //Envia la orden al backend
+        if (!user?.email) {
+            alert("Debes iniciar sesion o registrarte para completar tu pedido.");
+            navigate('/login');
+            return;
+        }
+        await fetch('http://localhost:3000/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: user.email,
+                items,
+                subtotal,
+                tax,
+                deliveryFee: DELIVERY_FEE,
+                total
+            }),
+        });
+        clear();
+        navigate('/order-success');
+    };
 
     return (
         <div style={{ background: "#f8fafc", minHeight: "100vh" }}>
@@ -73,23 +100,20 @@ const CheckoutPage: React.FC = () => {
                 <span>${total.toFixed(2)}</span>
                 </div>
                 <button
-                style={{
-                    width: "100%",
-                    padding: "1rem",
-                    background: "#1084f6",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "10px",
-                    fontSize: "1.1rem",
-                    fontWeight: 600,
-                    cursor: "pointer"
-                }}
-                onClick={() => {
-                    clear();
-                    navigate('/order-success');
-                }}
+                    style={{
+                        width: "100%",
+                        padding: "1rem",
+                        background: "#1084f6",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "10px",
+                        fontSize: "1.1rem",
+                        fontWeight: 600,
+                        cursor: "pointer"
+                    }}
+                    onClick={handleConfirmOrder}
                 >
-                Confirmar Orden
+                    Confirmar Orden
                 </button>
             </main>
         </div>

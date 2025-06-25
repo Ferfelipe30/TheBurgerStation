@@ -1,23 +1,50 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 type User = {
     id: string;
     email: string;
     fullName: string;
-} | null;
+};
 
-const UserContext = createContext<{
-    user: User;
-    setUser: React.Dispatch<React.SetStateAction<User>>;
-}>({
+type UserContextType = {
+    user: User | null;
+    setUser: (user: User | null) => void;
+    logout: () => void;
+};
+
+const UserContext = createContext<UserContextType>({
     user: null,
     setUser: () => {},
+    logout: () => {},
 });
 
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [user, setUser ] = useState<User>(null);
+    const [user, setUserState ] = useState<User | null>(null);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+        setUserState(JSON.parse(storedUser));
+        }
+    }, []);
+
+    // Guarda el usuario en localStorage cuando cambia
+    const setUser = (user: User | null) => {
+        setUserState(user);
+        if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+        } else {
+        localStorage.removeItem("user");
+        }
+    };
+
+    // Cierra sesión
+    const logout = () => {
+        setUser(null);
+    };
+
     return(
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ user, setUser, logout }}>
             {children}
         </UserContext.Provider>
     );

@@ -15,6 +15,7 @@ const users_module_1 = require("./users/users.module");
 const auth_module_1 = require("./auth/auth.module");
 const menu_module_1 = require("./menu/menu.module");
 const orders_module_1 = require("./orders/orders.module");
+const email_service_1 = require("./email/email.service");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -28,7 +29,7 @@ exports.AppModule = AppModule = __decorate([
             orders_module_1.OrdersModule
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [app_service_1.AppService, email_service_1.EmailService],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

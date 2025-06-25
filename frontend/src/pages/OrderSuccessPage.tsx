@@ -39,7 +39,10 @@ const OrderSuccessPage: React.FC = () => (
             </h1>
             <p style={{ fontSize: "1.2rem", color: "#222", marginBottom: 32 }}>
                 Tu pedido ha sido recibido exitosamente.<br />
-                ¡Gracias por elegir The Burger Station!
+                ¡Gracias por elegir The Burger Station!<br />
+                <span style={{ color: "#1084f6", fontWeight: 500 }}>
+                    Se ha enviado un correo de confirmación a tu dirección registrada.
+                </span>
             </p>
             <a
                 href="/"

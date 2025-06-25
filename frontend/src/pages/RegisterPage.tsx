@@ -33,12 +33,14 @@ const RegisterPage: React.FC = () => {
             if (!res.ok) throw new Error(data.message || 'Registration failed');
             alert('¡Registro exitoso!');
             //Guardar el usuario en el contexto global
-            setUser({
-                id: data.user.id,
-                email: data.user.email,
-                fullName: data.user.fullName,
-            });
-            navigate('/'); // Redirigir al usuario a la página principal
+            if (res.ok) {
+                setUser({
+                    id: data.user.id,
+                    email: data.user.email,
+                    fullName: data.user.fullName,
+                });
+                navigate('/menu'); // Redirigir al usuario a la página principal
+            };
         } catch (err: any) {
             setError(err.message);
         }

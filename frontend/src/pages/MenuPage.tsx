@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import BurgerCustomizeModal from "../components/BurgerCustomizeModal";
+import { useUser } from "../UserContext";
 
 const burgers = [
     {
@@ -36,6 +37,8 @@ const burgers = [
 
 const MenuPage: React.FC = () => {
     const [ selectedBurger, setSelectedBurger ] = useState<any>(null);
+    const { logout } = useUser();
+
     return (
         <div style={{ background: "#f8fafc", minHeight: "100vh" }}>
             {/* Header */}
@@ -85,6 +88,7 @@ const MenuPage: React.FC = () => {
                         textDecoration: "none",
                         fontSize: "1rem"
                     }}>Log In</a>
+                    <button onClick={logout}>Cerrar sesion</button>
                 </nav>
             </header>
 
