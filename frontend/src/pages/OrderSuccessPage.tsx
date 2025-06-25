@@ -41,7 +41,7 @@ const OrderSuccessPage: React.FC = () => (
                 Tu pedido ha sido recibido exitosamente.<br />
                 ¡Gracias por elegir The Burger Station!<br />
                 <span style={{ color: "#1084f6", fontWeight: 500 }}>
-                    Se ha enviado un correo de confirmación a tu dirección registrada.
+                    Se ha enviado un correo de confirmación a tu dirección registrada SPAM.
                 </span>
             </p>
             <a
