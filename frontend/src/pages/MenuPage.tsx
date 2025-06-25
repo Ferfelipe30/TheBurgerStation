@@ -88,7 +88,7 @@ const MenuPage: React.FC = () => {
                         textDecoration: "none",
                         fontSize: "1rem"
                     }}>Log In</a>
-                    <button onClick={logout}>Cerrar sesion</button>
+                    <button onClick={logout}>Cerrar Seccion</button>
                 </nav>
             </header>
 
