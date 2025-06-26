@@ -17,7 +17,7 @@ const LoginPage: React.FC = () => {
         setError(null);
 
         try {
-            const res = await fetch('http://localhost:3000/users/login', {
+            const res = await fetch('https://theburgerstation.onrender.com/users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),

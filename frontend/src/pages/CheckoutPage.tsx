@@ -22,7 +22,7 @@ const CheckoutPage: React.FC = () => {
             navigate('/login');
             return;
         }
-        await fetch('http://localhost:3000/orders', {
+        await fetch('https://theburgerstation.onrender.com/orders', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
