@@ -6,7 +6,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: '*', // Para desarrollo, permite cualquier origen. En produccion, usar el dominio de tu frontend.
+    origin: [
+      'https://the-burger-station.vercel.app',
+      'http://localhost:3000',
+      'https://theburgerstation.onrender.com'
+    ], // Para desarrollo, permite cualquier origen. En produccion, usar el dominio de tu frontend.
     credentials: true,
   });
 
