@@ -11,14 +11,17 @@ export class OrdersController {
 
     @Post()
     async createOrder(@Body() orderDto: any) {
-        if (!orderDto.email) {
-            throw new BadGatewayException('El email del cliente es requerido para enviar la confirmacion.');
+        try {
+            console.log('Order received: ', orderDto);
+            if (!orderDto.email) {
+                throw new BadGatewayException('El email del cliente es requerido para enviar la confirmacion.');
+            }
+            const order = await this.orderService.create(orderDto);
+            await this.emailService.sendOrderConfirmation(orderDto.email, orderDto);
+            return { message: 'Orden creada y correo enviado con éxito' };
+        } catch (error) {
+            console.error('Order creation error: ', error);
+            throw error;
         }
-        // Guarda la orden en la base de datos
-        const order = await this.orderService.create(orderDto);
-
-        // Envía el correo de confirmación
-        await this.emailService.sendOrderConfirmation(orderDto.email, orderDto);
-        return { message: 'Orden creada y correo enviado con éxito' };
     }
 }
